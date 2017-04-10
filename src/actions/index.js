@@ -1,4 +1,4 @@
-import { CREATE_ITEM, EDIT_ITEM, DELETE_ITEM }from '../constants'
+import { CREATE_ITEM, EDIT_ITEM, DELETE_ITEM } from '../constants'
 
 export function createItemToDo(item){
 	return {

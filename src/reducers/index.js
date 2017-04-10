@@ -1,5 +1,4 @@
-import { createItemToDo, editItemToDo, deleteItemToDo } from '../actions'
-import { CREATE_ITEM, EDIT_ITEM, DELETE_ITEM } from '../constants'
+import { CREATE_ITEM, EDIT_ITEM, DELETE_ITEM } from '../constants';
 import _  from 'lodash';
 
 const INITIAL_STATE = {
@@ -26,7 +25,7 @@ function todoApp(state = INITIAL_STATE, action) {
 			}
 
 		case EDIT_ITEM:
-			const copy = _.cloneDeep(state.todos)
+			let copy = _.cloneDeep(state.todos)
 			_.forEach(copy, function(value){
 				if (value.id == action.payload.id) {
 					for (var key in action.payload) {
@@ -39,10 +38,10 @@ function todoApp(state = INITIAL_STATE, action) {
 			}
 
 		case DELETE_ITEM:
-			const copy = _.cloneDeep(state.todos)
-			_.forEach(copy, function(value, index){
+			let copy_ = _.cloneDeep(state.todos)
+			_.forEach(copy_, function(value, index){
 				if (value.id == action.payload.id) {
-					copy[index].splice(copy[index], 1)
+					copy_[index].splice(copy_[index], 1)
 				}
 			})
 			return {
@@ -54,3 +53,4 @@ function todoApp(state = INITIAL_STATE, action) {
 	}
 }
 
+export default todoApp
