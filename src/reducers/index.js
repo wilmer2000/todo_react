@@ -1,4 +1,4 @@
-import { CREATE_ITEM, EDIT_ITEM, DELETE_ITEM } from '../constants';
+import { CREATE_ITEM, EDIT_ITEM, DELETE_ITEM, STATUS_DONE, STATUS_IN_PROGRESS, STATUS_TO_PULL } from '../constants';
 import _  from 'lodash';
 
 const INITIAL_STATE = {
@@ -6,17 +6,32 @@ const INITIAL_STATE = {
 		{
 			id : 1,
 			title : "Title 1",
-			description : "Description 1"
+			description : "Description 1",
+			status : STATUS_TO_PULL
 		},
 		{
 			id : 2,
 			title : "Title 2",
-			description : "Description 2"
+			description : "Description 2",
+			status : STATUS_DONE
+		},
+		{
+			id : 3,
+			title : "Title 3",
+			description : "Description 3",
+			status : STATUS_TO_PULL
+		},
+		{
+			id : 4,
+			title : "Title 4",
+			description : "Description 4",
+			status : STATUS_IN_PROGRESS
 		}
 	]
 }
 
 function todoApp(state = INITIAL_STATE, action) {
+	let copy
 	switch (action.type) {
 		case CREATE_ITEM:
 			const newItem = action.payload
@@ -25,9 +40,9 @@ function todoApp(state = INITIAL_STATE, action) {
 			}
 
 		case EDIT_ITEM:
-			let copy = _.cloneDeep(state.todos)
+			copy = _.cloneDeep(state.todos)
 			_.forEach(copy, function(value){
-				if (value.id == action.payload.id) {
+				if (value.id === action.payload.id) {
 					for (var key in action.payload) {
 						value[key] = action.payload[key]
 					}
@@ -38,10 +53,11 @@ function todoApp(state = INITIAL_STATE, action) {
 			}
 
 		case DELETE_ITEM:
-			let copy_ = _.cloneDeep(state.todos)
-			_.forEach(copy_, function(value, index){
-				if (value.id == action.payload.id) {
-					copy_[index].splice(copy_[index], 1)
+			copy = _.cloneDeep(state.todos)
+			_.forEach(copy, function(value, index){
+				if (value.id === action.payload.id) {
+					_.pull(copy, copy[index])
+					return false
 				}
 			})
 			return {
