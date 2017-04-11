@@ -12,6 +12,7 @@ class ListToDo extends Component {
 			itemSelectToEdit : {}
 		}
 		this.renderItem = this.renderItem.bind(this);
+		this.changeModeEdit = this.changeModeEdit.bind(this);
 	}
 
 	renderItem(todo, index){
@@ -35,11 +36,7 @@ class ListToDo extends Component {
 		})
 	}
 	changeModeEdit(stateModeEdit){
-		if (stateModeEdit) {
-			this.setState({modeEdit : true})
-		} else {
-			this.setState({modeEdit : false})
-		}
+		this.setState({modeEdit : false})	
 	}
 	updateToDo(todos){
 		const idToDo = this.props.todos.id

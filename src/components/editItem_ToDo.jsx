@@ -14,6 +14,7 @@ class EditItem extends Component {
 
 		this.inputChange = this.inputChange.bind(this)
 		this.itemSave = this.itemSave.bind(this)
+		this.itemCancelEdit = this.itemCancelEdit.bind(this)
 	}
 
 	inputChange(event){
