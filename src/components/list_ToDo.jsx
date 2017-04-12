@@ -2,33 +2,65 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createItemToDo, editItemToDo, deleteItemToDo } from '../actions';
-import EditItemToDo from './editItem_ToDo'
+import EditItemToDo from './editItem_ToDo';
+import { STATUS_DONE } from '../constants';
+import AddToDo from '../components/add_ToDo';
+import Modal from '../components/modal';
+import _ from 'lodash';
 
 class ListToDo extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			modeEdit : false,
-			itemSelectToEdit : {}
+			itemSelectToEdit : {},
+			stateModal : false
 		}
 		this.renderItem = this.renderItem.bind(this);
 		this.changeModeEdit = this.changeModeEdit.bind(this);
+		this.itemDone = this.itemDone.bind(this);
+		this.notifyResponse = this.notifyResponse.bind(this);
 	}
 
 	renderItem(todo, index){
 		const statusClass = todo.status.toLowerCase().replace(/_/g, "-");
 		return(	
 			<li key={index} className={`list-group-item ${statusClass}`}>
-				{todo.title}
-				<div className="pull-right">
-					<a onClick={this.showEdit.bind(this,todo)} className="btn-edit">Edit</a>
-					<a onClick={this.props.editItemToDo.bind(this,todo)} className="btn-done">Done</a>
-					<a onClick={this.props.deleteItemToDo.bind(this,todo)} className="btn-delete">Delete</a>
+				<p className="cont-title">{todo.title}</p>
+				<div className="cont-btn">
+					<a onClick={this.showEdit.bind(this,todo)} className="btn-edit"></a>
+					<a onClick={this.itemDone.bind(this,todo)} className="btn-done"></a>
+					<a onClick={this.showModal.bind(this)} className="btn-delete"></a>
 				</div>
 			</li>
 		)
 	}
+	notifyResponse(response){
+		console.log(response)
+		// let copy = _.cloneDeep(this.state.stateModal)
+		// copy = response
+		// this.setState({
+		// 	stateModal : copy
+		// })
+	}
+	showModal(){
+		this.setState({
+			stateModal : true
+		})
+	}
+	renderModal(icon,text,type){
+		if (this.state.stateModal) {
+			return(
+				<Modal modalIcon={icon} modalText={text} modalType={type} modalResponse={this.notifyResponse} />
+			)
+		}
+	}
 
+	itemDone(item){
+		let copy = _.cloneDeep(item)
+		copy.status = STATUS_DONE
+		this.props.editItemToDo(copy)
+	}
 	showEdit(todo){
 		this.setState({
 			modeEdit : true,
@@ -55,12 +87,19 @@ class ListToDo extends Component {
 	componentWillReceiveProps(nextProps){
 		this.updateToDo(nextProps.todos)
 	}
+
 	render(){
+
+		
 		if (!this.state.modeEdit) {
 			return(
-				<ul className="list-group">
-					{this.props.todos.map(this.renderItem)}
-				</ul>
+				<div>
+					{this.renderModal("icon-danger","Do you want delete this ToDo item?","yes-no")}
+					<AddToDo />
+					<ul className="list-group">
+						{this.props.todos.map(this.renderItem)}
+					</ul>
+				</div>
 			)
 		} else {
 			return(

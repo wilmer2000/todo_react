@@ -1,4 +1,4 @@
-import { CREATE_ITEM, EDIT_ITEM, DELETE_ITEM, STATUS_DONE, STATUS_IN_PROGRESS, STATUS_TO_PULL } from '../constants';
+import * as CONSTANTS from '../constants';
 import _  from 'lodash';
 
 const INITIAL_STATE = {
@@ -7,39 +7,49 @@ const INITIAL_STATE = {
 			id : 1,
 			title : "Title 1",
 			description : "Description 1",
-			status : STATUS_TO_PULL
+			status : CONSTANTS.STATUS_TO_PULL
 		},
 		{
 			id : 2,
 			title : "Title 2",
 			description : "Description 2",
-			status : STATUS_DONE
+			status : CONSTANTS.STATUS_DONE
 		},
 		{
 			id : 3,
 			title : "Title 3",
 			description : "Description 3",
-			status : STATUS_TO_PULL
+			status : CONSTANTS.STATUS_TO_PULL
 		},
 		{
 			id : 4,
 			title : "Title 4",
 			description : "Description 4",
-			status : STATUS_IN_PROGRESS
+			status : CONSTANTS.STATUS_IN_PROGRESS
+		},
+		{
+			id : 5,
+			title : "Title 5",
+			description : "Description 5",
+			status : CONSTANTS.STATUS_DELETED
 		}
-	]
+	],
+	nextID : 6
 }
 
 function todoApp(state = INITIAL_STATE, action) {
 	let copy
 	switch (action.type) {
-		case CREATE_ITEM:
+		case CONSTANTS.CREATE_ITEM:
 			const newItem = action.payload
+    		const newID = state.nextID
+    		newItem.id = newID
 			return {
-				todos : [newItem, ...state.todos]
+				todos : [newItem, ...state.todos],
+				nextID : newID + 1
 			}
 
-		case EDIT_ITEM:
+		case CONSTANTS.EDIT_ITEM:
 			copy = _.cloneDeep(state.todos)
 			_.forEach(copy, function(value){
 				if (value.id === action.payload.id) {
@@ -49,10 +59,11 @@ function todoApp(state = INITIAL_STATE, action) {
 				}
 			})
 			return {
-				todos : copy
+				todos : copy,
+				nextID : state.nextID
 			}
 
-		case DELETE_ITEM:
+		case CONSTANTS.DELETE_ITEM:
 			copy = _.cloneDeep(state.todos)
 			_.forEach(copy, function(value, index){
 				if (value.id === action.payload.id) {
@@ -61,7 +72,8 @@ function todoApp(state = INITIAL_STATE, action) {
 				}
 			})
 			return {
-				todos : copy
+				todos : copy,
+				nextID : state.nextID
 			}
 
 		default:

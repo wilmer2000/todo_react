@@ -50,9 +50,9 @@ class EditItem extends Component {
 			    	Selected: {this.state.itemEdit.status}
 			    </label>
 					<select id="status" className="form-control" onChange={this.inputChange}>
-					  <option value="done">Done</option>
-					  <option value="in_pogress">In Progress</option>
-					  <option value="ready_to_pull">Ready to Play</option>
+					  <option value="status-done">Done</option>
+					  <option value="status-in-progress">In Progress</option>
+					  <option value="status-ready-to-pull">Ready to Pull</option>
 					</select>
 			  </div>
 			  <div className="form-group">
@@ -60,6 +60,7 @@ class EditItem extends Component {
 			    <textarea id="description" value={this.state.itemEdit.description} className="form-control" rows="3" onChange={this.inputChange}></textarea>
 			  </div>
 			  <div className="form-group">
+			  	<button type="submit" className="btn btn-danger" onClick={this.itemCancelEdit} >Delete</button>
 			  	<button type="submit" className="btn btn-danger" onClick={this.itemCancelEdit} >Cancel</button>
 			  	<button type="submit" className="btn btn-success" onClick={this.itemSave} >Save</button>
 			  </div>

@@ -4,3 +4,4 @@ export const EDIT_ITEM = 'EDIT_ITEM';
 export const STATUS_DONE = 'STATUS_DONE';
 export const STATUS_IN_PROGRESS = 'STATUS_IN_PROGRESS';
 export const STATUS_TO_PULL = 'STATUS_TO_PULL';
+export const STATUS_DELETED = 'STATUS_DELETED';
