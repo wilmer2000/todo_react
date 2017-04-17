@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 class Modal extends Component {
-
+	modalResponse(response){
+		this.props.modalResponse(response)
+	}
 	render(){
 		return (
 			<div className="cont-modal">
@@ -14,9 +16,9 @@ class Modal extends Component {
 						{this.props.modalText}
 					</div>	
 					<div className={`buttons ${this.props.modalType}`}>
-						<a className="btn btn-yes" onClick={this.props.modalResponse(true)}>Yes</a>
-						<a className="btn btn-no" onClick={this.props.modalResponse(false)}>No</a>
-						<a className="btn btn-on" onClick={this.props.modalResponse(true)}>Ok</a>
+						<a className="btn btn-yes" onClick={this.modalResponse.bind(this,true)}>Yes</a>
+						<a className="btn btn-no" onClick={this.modalResponse.bind(this,false)}>No</a>
+						<a className="btn btn-on" onClick={this.modalResponse.bind(this,true)}>Ok</a>
 					</div>				
 				</div>
 			</div>

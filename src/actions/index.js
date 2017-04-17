@@ -18,4 +18,3 @@ export function deleteItemToDo(item){
 		payload: item
 	}
 }
-

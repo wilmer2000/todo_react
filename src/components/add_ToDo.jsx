@@ -26,7 +26,6 @@ class AddToDo extends Component {
 
 	inputChange(event){
 		let modifiedItem = _.cloneDeep(this.state.todo)
-		console.log(modifiedItem)
 		// let last = _.last(modifiedItem)
 		// modifiedItem[last] = event.target.ỉd
 		modifiedItem[event.target.id] = event.target.value

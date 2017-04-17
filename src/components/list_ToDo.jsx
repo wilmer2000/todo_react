@@ -24,28 +24,31 @@ class ListToDo extends Component {
 
 	renderItem(todo, index){
 		const statusClass = todo.status.toLowerCase().replace(/_/g, "-");
-		return(	
-			<li key={index} className={`list-group-item ${statusClass}`}>
-				<p className="cont-title">{todo.title}</p>
-				<div className="cont-btn">
-					<a onClick={this.showEdit.bind(this,todo)} className="btn-edit"></a>
-					<a onClick={this.itemDone.bind(this,todo)} className="btn-done"></a>
-					<a onClick={this.showModal.bind(this)} className="btn-delete"></a>
-				</div>
-			</li>
-		)
+		if (this.props.filterList === "" || todo.title.includes(this.props.filterList)) {
+			return(	
+				<li key={index} className={`list-group-item ${statusClass}`}>
+					<p className="cont-title">{todo.title}</p>
+					<div className="cont-btn">
+						<a onClick={this.showEdit.bind(this,todo)} className="btn-edit"></a>
+						<a onClick={this.itemDone.bind(this,todo)} className="btn-done"></a>
+						<a onClick={this.showModal.bind(this,todo)} className="btn-delete"></a>
+					</div>
+				</li>
+			)
+		}
 	}
 	notifyResponse(response){
-		console.log(response)
-		// let copy = _.cloneDeep(this.state.stateModal)
-		// copy = response
-		// this.setState({
-		// 	stateModal : copy
-		// })
-	}
-	showModal(){
+		if (response) {
+			this.props.deleteItemToDo(this.state.itemSelectToEdit)
+		}
 		this.setState({
-			stateModal : true
+			stateModal : false
+		})
+	}
+	showModal(todo){
+		this.setState({
+			stateModal : true,
+			itemSelectToEdit : todo
 		})
 	}
 	renderModal(icon,text,type){

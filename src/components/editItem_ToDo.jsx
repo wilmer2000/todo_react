@@ -60,7 +60,6 @@ class EditItem extends Component {
 			    <textarea id="description" value={this.state.itemEdit.description} className="form-control" rows="3" onChange={this.inputChange}></textarea>
 			  </div>
 			  <div className="form-group">
-			  	<button type="submit" className="btn btn-danger" onClick={this.itemCancelEdit} >Delete</button>
 			  	<button type="submit" className="btn btn-danger" onClick={this.itemCancelEdit} >Cancel</button>
 			  	<button type="submit" className="btn btn-success" onClick={this.itemSave} >Save</button>
 			  </div>
